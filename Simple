@@ -1,0 +1,51 @@
+'''
+Ejercicio 1.1
+
+Hacer una función que genere una lista de diccionarios que contengan 
+id y edad, donde edad sea un número aleatorio entre 1 y 100 y la 
+longitud de la lista sea de 10 elementos. retornar la lista.
+
+'''
+
+import random as rd
+
+def list_dic ():
+	
+	lista = []
+
+	for x in range(10):
+		# Como ID se adopta un numero aleatorio entre 10000 y 99999 
+		dic = {"ID": rd.randint(10000,99999),"Edad": rd.randint(1,100)} 
+		lista.append(dic)
+
+	return lista
+  
+'''
+Ejercicio 1.2
+
+Hacer otra función que reciba lo generado en la primer función y ordenarlo de mayor a
+menor. Printear el id de la persona más joven y más vieja. Devolver la lista ordenada.
+
+'''
+
+#Se importa la funcion realizada en el ejercicio anterior
+import gen_list as gl 
+
+def order():
+
+	#Se asigna la lista generada a la variable de la funcion
+	lista = gl.list_dic() 
+
+	tam = len(lista)
+
+	#Se utiliza algoritmo de ordenamiento de burbuja (Bubble Sort)
+	for x in range(1,tam-1):
+		for y in range(tam-1):
+			if(lista[y]["Edad"]<lista[y+1]["Edad"]):
+				aux = lista[y]["Edad"]
+				lista[y]["Edad"] = lista[y+1]["Edad"]
+				lista[y+1]["Edad"]=aux
+
+	print(lista[tam-1]["ID"], lista[0]["ID"])
+	
+	return lista
