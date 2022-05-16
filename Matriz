@@ -1,0 +1,79 @@
+'''
+Ejercicio 2
+
+Crear una matriz de 5x5 randomizada con números enteros, 
+encontrar secuencia de 4 números consecutivos horizontal 
+o vertical y si se encuentra mostrar la posición inicial 
+y final.
+
+'''
+
+import numpy as pd
+from numpy import random
+
+# Genera una matriz de 5x5 randomizada cuyos elementos oscilan entre 1 y 99
+matrix = random.randint(1, 99, size=(5,5))
+print(matrix)
+
+# Funcion que busca 4 numeros consecutivos dentro de la matriz
+def find_line(mat):
+
+	# Listas que contendran las posiciones inicial y final respectivamente
+	ini=[]
+	fin=[]
+
+	print("Posicion de lineas verticales:")
+	# Algoritmo de busqueda de lineas verticales
+
+	# Bucle que busca en cada columna
+	for x in range(5):
+		# Marcador que determina continuidad de la linea
+		cont = 1
+		# Bucle que busca en cada fila
+		for y in range(4):
+			# Condicion de dos elementos contiguos iguales
+			if(mat[y][x]==mat[y+1][x]):
+				# Primeros dos elementos iguales encontrados
+				if(cont == 1): 
+					ini.append(y+1)
+					ini.append(x+1) 
+				# Ultimos dos elementos iguales encontrados
+				if(cont==3):
+					fin.append(y+2)
+					fin.append(x+1)
+					break
+				cont += 1
+			# Condicion se cumple cuando no existe igualdad de elementos contiguos
+			else: cont = 1
+		
+		if(ini != [] and fin != []):
+			print(ini, fin)
+		
+		ini.clear()
+		fin.clear()
+
+	print("Posicion de lineas horizontales:")
+	# Algoritmo de busqueda de lineas horizontales
+
+	# Bucle que busca en cada fila
+	for x in range(5):
+		cont = 1
+
+		# Bucle que busca en cada columna
+		for y in range(4):
+			if(mat[x][y]==mat[x][y+1]):
+				if(cont == 1): 
+					ini.append(x+1)
+					ini.append(y+1) 
+				if(cont==3):
+					fin.append(x+1)
+					fin.append(y+2)
+					break
+				cont += 1
+			else: cont = 1
+
+		if(ini != [] and fin != []):
+			print(ini, fin)
+
+		ini.clear()
+		fin.clear()
