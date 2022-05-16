@@ -1,0 +1,59 @@
+'''
+Ejercicio 3
+
+Escribir una clase en python llamada círculo que contenga un radio, 
+con un método que devuelva el área y otro que devuelva el perímetro 
+del círculo.
+
+Si se instancia la clase con radio <= 0 mostrar una excepción 
+indicando un error amigable al usuario e impidiendo la instanciación.
+
+Si printeamos el objeto creado debe mostrarse una representación 
+amigable.
+
+El objeto debe tener su atributo radio modificable, si se le intenta 
+setear un valor <= 0 mostrar un error y no permitir modificación.
+
+Permitir la multiplicación del circulo: Circulo * n debe devolver 
+un nuevo objeto con el radio multiplicado por n. No permitir la 
+multiplicación por números <= 0
+
+'''
+
+# Excepcion personalizada 
+class RadioIncorrectoError(Exception):
+	pass
+
+class Circulo:
+	# Constructor
+	def __init__(self, num):
+		self.radio = num
+		print("Soy un nuevo circulo")
+
+	# Metodo dunder que permite la multiplicacion entre objetos
+	def __mul__(self, otro):
+		return Circulo(self.radio * otro)
+
+	# Metodo dunder que impide la modificacion del atributo radio por 
+	# valores negativos o cero
+	def __setattr__(self, key, valor):
+		if (key == 'radio'):
+			try:
+				if valor <= 0: raise RadioIncorrectoError()
+			except RadioIncorrectoError:
+				print("No se permiten valores de radio negativo o cero.")
+				exit()
+
+		self.__dict__[key] = valor
+
+	# Metodo dunder que muestra una representacion amigable del objeto
+	def __repr__(self):
+		return "Este es un circulo de radio " + str(self.radio)
+
+	# Metodo que calcula el area del circulo
+	def area(self):
+		return self.radio * self.radio * 3.14
+
+	# Metodo que calcula el perimetro del circulo
+	def per(self):
+		return self.radio * 2 * 3.14
